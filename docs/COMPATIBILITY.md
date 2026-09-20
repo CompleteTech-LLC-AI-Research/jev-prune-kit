@@ -64,7 +64,10 @@ summary. The adapter cannot promise one prompt across all subsequent retries or
 across restarts. Known receipts restore from the active branch in the same
 session. A fork with a different session ID does not inherit them: reassess.
 
-Do not combine this extension with another extension registering `/prune`.
+Two jev-bus packages no longer need this rule: claim conflicts are refused at install
+time and only the carrier registers `/prune`, so combining this kit with
+`jev-context-fabric` is supported and coordinated (see [BUS.md](BUS.md)). The rule still
+stands for any OTHER extension registering `/prune`, which the bus knows nothing about.
 Existing `context`-transforming extensions or provider caches may interact with
 its projections. Verify in a disposable session before enabling on real work.
 

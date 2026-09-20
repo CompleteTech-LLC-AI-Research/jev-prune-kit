@@ -32,3 +32,12 @@ History currently contains only `Initial commit: Jev Prune Kit 0.1.0`; no recurr
 ## Safety & Configuration
 
 Preserve original transcripts and revalidate receipt proofs before projection. Keep credentials out of source, fixtures, and logs. Remote assessment requires explicit consent and environment configuration described in `docs/SECURITY.md`. Never shut down or terminate the shared WSL VM.
+
+## Coordinating with another context-transforming package
+
+If `jev-context-fabric` is or will be installed, read [docs/BUS.md](docs/BUS.md) first. Report
+the `jev_bus` block from the plan: which hosts this kit will carry, which it defers on, and any
+carrier it would take over. Do not pass `--force-carrier` or `--no-bus` unless the user asks;
+both change which package owns a host's hook. Install order does not affect the outcome, so do
+not reinstall to influence it. Where another package carries a host, this kit registers no
+`/prune` and performs no projection there -- that is correct, not a failed install.

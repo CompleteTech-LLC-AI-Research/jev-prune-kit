@@ -102,6 +102,8 @@ On macOS/Linux substitute `python3 ./install.py`. The wrappers `install.sh` and
 | `--home` / `--data-home` | Base for default roots / persistent runtime, manifest and state. |
 | `--doctor` | Read-only integrity and capability report. |
 | `--uninstall` | Remove unchanged owned files only. |
+| `--no-bus` | Do not participate in [jev-bus](docs/BUS.md); claim every hook this kit supports, as in 0.1.0. |
+| `--force-carrier` | Take a host's transform hook even if another jev-bus package currently carries it. |
 
 Omitting `--experimental-adapters`, `--pi-choice` and `--activate-hermes` gives a
 skills-only installation, which cannot perform live pruning. An existing native
