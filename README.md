@@ -157,6 +157,19 @@ created, and existing host token counters may still trigger native compaction.
 
 ## Enabling remote assessment
 
+Copy `.env.example` to `.env` beside `runner.py` and fill in `TYPESAFE_API_KEY`.
+Set `JEV_PRUNE_ALLOW_REMOTE=1` only after reviewing [SECURITY.md](docs/SECURITY.md).
+Local `.env` files are ignored by Git.
+
+Assessment reads the runtime-root `.env`, not the current directory or parents.
+For installed adapters, set `JEV_PRUNE_ENV_FILE` to the absolute path of your
+private `.env` before launching the harness; installation does not copy it.
+Process variables override file values, including empty values. Only the key and
+remote-consent setting are loaded. Syntax: one `NAME=value` per line, optional
+matching single/double quotes, optional `export`, and whole-line `#` comments.
+Values are literal: no interpolation, escapes, multiline values, or inline
+comments. Inspection, projection, and installation do not load this file.
+
 Installation and `inspect` never call TypeSafe. Remote assessment stays off
 until you turn it on, deliberately, in the terminal that launches the harness —
 after reading [docs/SECURITY.md](docs/SECURITY.md).

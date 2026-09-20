@@ -8,6 +8,7 @@ import urllib.error
 import urllib.request
 from typing import Any
 from .core import MAX_REQUEST, MAX_RESPONSE, PruneError, dumps, strict_json
+from .config import assessment_environment
 
 ENDPOINT = "https://api.typesafe.ai/v1/systemone"
 
@@ -17,9 +18,10 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def evaluate(body: dict[str, Any]) -> Any:
-    if os.environ.get("JEV_PRUNE_ALLOW_REMOTE") != "1":
+    environment = assessment_environment()
+    if environment.get("JEV_PRUNE_ALLOW_REMOTE") != "1":
         raise PruneError("Remote assessment disabled. After reviewing disclosure, set JEV_PRUNE_ALLOW_REMOTE=1")
-    key = os.environ.get("TYPESAFE_API_KEY", "")
+    key = environment.get("TYPESAFE_API_KEY", "")
     if not key or key.strip() != key or "\n" in key or "\r" in key:
         raise PruneError("Missing or invalid TYPESAFE_API_KEY")
     raw = dumps(body).encode()
@@ -29,7 +31,8 @@ def evaluate(body: dict[str, Any]) -> Any:
     # The credential is inherited, not put on the command line or written to disk.
     try:
         done = subprocess.run([sys.executable, "-m", "jev_prune.client"], input=raw,
-                              capture_output=True, timeout=10, check=False, cwd=Path(__file__).resolve().parents[1])
+                              capture_output=True, timeout=10, check=False, env=environment,
+                              cwd=Path(__file__).resolve().parents[1])
     except (subprocess.TimeoutExpired, OSError) as exc:
         raise PruneError("Evaluator deadline or transport startup failure; no edits") from exc
     if done.returncode or len(done.stdout) > MAX_RESPONSE:

@@ -232,7 +232,7 @@ def build_plan(source: Path, data_home: Path, roots: list[tuple[str, Path]], exp
     # Copy only source and documentation; no caches, env files, node_modules or credentials.
     for folder in ("jev_prune", "adapters", "docs"):
         for p in sorted((source / folder).rglob("*")):
-            if p.is_file() and p.suffix in {".py", ".mjs", ".md", ".json"} and "__pycache__" not in p.parts:
+            if p.is_file() and p.suffix in {".py", ".mjs", ".md", ".json"} and "__pycache__" not in p.parts and not p.name.startswith(".env"):
                 writes.append(Write(runtime / p.relative_to(source), p.read_bytes(), "runtime"))
     writes.append(Write(runtime / "runner.py", (source / "runner.py").read_bytes(), "runtime"))
     targets = []

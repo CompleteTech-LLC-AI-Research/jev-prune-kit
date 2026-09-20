@@ -2,6 +2,14 @@
 
 ## Consent and data flow
 
+Assessment may load `TYPESAFE_API_KEY` and `JEV_PRUNE_ALLOW_REMOTE` from `.env`
+beside the runtime's `runner.py`, or a file selected by `JEV_PRUNE_ENV_FILE`.
+Process variables take precedence, including explicit empty values. Keep this
+plaintext file private; Git ignores `.env` and `.env.*` except `.env.example`.
+No parent-directory discovery or shell expansion is performed. File settings
+are passed directly to the transport child's environment without modifying the
+host process environment. Installation does not copy the root `.env` file.
+
 Installation and `inspect` do not call TypeSafe. A native `/prune` assessment
 requires `JEV_PRUNE_ALLOW_REMOTE=1` and `TYPESAFE_API_KEY` in the process launching
 the harness. Selecting Compact never calls Jev. Assessment sends only a bounded

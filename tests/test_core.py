@@ -129,11 +129,11 @@ class CoreTests(unittest.TestCase):
         self.assertEqual(assess(self.snap([]),[],broken)["added"],0)
 
     def test_remote_opt_in_required(self):
-        with patch.dict("os.environ",{},clear=True):
+        with patch.dict("os.environ",{"JEV_PRUNE_ALLOW_REMOTE":"0"},clear=True):
             with self.assertRaises(PruneError): evaluate({})
 
     def test_missing_key_no_network(self):
-        with patch.dict("os.environ",{"JEV_PRUNE_ALLOW_REMOTE":"1"},clear=True):
+        with patch.dict("os.environ",{"JEV_PRUNE_ALLOW_REMOTE":"1", "TYPESAFE_API_KEY":""},clear=True):
             with self.assertRaises(PruneError): evaluate({})
 
     def test_openai_format_projection(self):

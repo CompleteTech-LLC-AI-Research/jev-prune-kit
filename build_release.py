@@ -23,7 +23,7 @@ def packed(files):
 payload_files=[]
 for directory in ("jev_prune", "adapters", "docs"):
     for p in (ROOT/directory).rglob("*"):
-        if p.is_file() and p.suffix in {".py", ".mjs", ".md", ".json"} and "__pycache__" not in p.parts:
+        if p.is_file() and p.suffix in {".py", ".mjs", ".md", ".json"} and "__pycache__" not in p.parts and not p.name.startswith(".env"):
             payload_files.append((p.relative_to(ROOT).as_posix(), p.read_bytes()))
 for name in ("install.py", "runner.py"):
     payload_files.append((name,(ROOT/name).read_bytes()))
@@ -95,9 +95,11 @@ if __name__ == "__main__":
 
 source_files=[]
 for p in ROOT.rglob("*"):
+    if p.name.startswith(".env") and p.name != ".env.example":
+        continue
     if not p.is_file() or "__pycache__" in p.parts or p.name in {"tests-initial.log", "tests-second.log"}:
         continue
-    if p.suffix in {".py", ".mjs", ".md", ".json", ".toml", ".ps1", ".sh", ".log"}:
+    if p.name == ".env.example" or p.suffix in {".py", ".mjs", ".md", ".json", ".toml", ".ps1", ".sh", ".log"}:
         source_files.append(("jev-prune-kit/"+p.relative_to(ROOT).as_posix(),p.read_bytes()))
 (OUT/"jev-prune-kit.zip").write_bytes(packed(source_files))
 checks=[]
