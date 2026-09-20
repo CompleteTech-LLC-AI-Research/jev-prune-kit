@@ -10,6 +10,8 @@ contract for agent harnesses.
 
 `v0.1.0` · `Python ≥ 3.10` · `zero dependencies` · `offline install` · **experimental**
 
+[Install](#install) · [Compatibility](docs/COMPATIBILITY.md) · [Standalone use](#standalone-use) · [Tests](#tests) · [Security](docs/SECURITY.md) · [Repository map](#repository-map)
+
 </div>
 
 ---
