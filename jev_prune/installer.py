@@ -18,6 +18,7 @@ from . import __version__
 from .core import PruneError, dumps, strict_json
 from .fsutil import atomic_write, file_lock, safe_path
 
+PACKAGE = "jev-prune-kit"
 TARGETS = ("openclaw", "hermes", "opencode", "codex", "claude", "pi", "gemini", "cursor", "copilot", "generic")
 NATIVE = {"pi", "hermes", "opencode"}
 BINS = {"openclaw": "openclaw", "hermes": "hermes", "opencode": "opencode", "codex": "codex",
@@ -236,6 +237,7 @@ def build_plan(source: Path, data_home: Path, roots: list[tuple[str, Path]], exp
                 writes.append(Write(runtime / p.relative_to(source), p.read_bytes(), "runtime"))
     writes.append(Write(runtime / "runner.py", (source / "runner.py").read_bytes(), "runtime"))
     targets = []
+    stages: list[dict] = []
     for name, root in roots:
         root = safe_path(root)
         cap = capability(name, experimental, pi_choice)
@@ -251,6 +253,21 @@ def build_plan(source: Path, data_home: Path, roots: list[tuple[str, Path]], exp
         config = {"python": python, "runner": str(runtime / "runner.py"), "profile": profile,
                   "format": {"pi": "pi", "opencode": "opencode", "hermes": "openai"}[name],
                   "stateDir": str(data_home / "state" / profile), "autoChoice": name == "pi" and pi_choice}
+        stages.append({
+            # One stage per (host, root): the profile and state directory are the same ones
+            # the native wrapper uses, so a carrier in another package reads exactly the
+            # receipts this package approved. Claims only `tool-result:read`, and the
+            # projection substitutes bodies in place without changing the array length,
+            # which is what lets a downstream stage keep keying messages by position.
+            "name": f"jev-prune.dedup@{name}:{profile[:8]}",
+            "priority": 100,
+            "claims": ["tool-result:read"],
+            "hosts": [name],
+            "transport": {"kind": "subprocess-json", "argv": [
+                python, str(runtime / "runner.py"), "--bus-stage",
+                "--state-dir", config["stateDir"], "--profile", profile,
+                "--format", config["format"]]},
+        })
         if name == "pi":
             text = f'import create from {json.dumps((runtime / "adapters/pi.mjs").as_uri())};\nexport default function(pi) {{ return create(pi, {json.dumps(config)}); }}\n'
             writes.append(Write(root / "extensions" / "jev-prune.ts", text.encode(), "native-wrapper"))
@@ -269,7 +286,7 @@ def register(ctx):
 '''
             writes.append(Write(root / "plugins" / "jev-prune" / "__init__.py", text.encode(), "native-wrapper"))
             writes.append(Write(root / "plugins" / "jev-prune" / "plugin.yaml", f'name: jev-prune\nversion: {__version__}\ndescription: Experimental single-user request projection; native compression unchanged\n'.encode(), "native-manifest"))
-    return writes, targets
+    return writes, targets, stages
 
 
 def activate_hermes(targets: list[dict]) -> list[dict]:
@@ -305,6 +322,8 @@ def main(argv=None):
     parser.add_argument("--activate-hermes", action="store_true", help="After installation, invoke Hermes's native plugin-enable command")
     parser.add_argument("--doctor", action="store_true", help="Read-only installed-file integrity and capability report")
     parser.add_argument("--uninstall", action="store_true", help="Remove unchanged owned files only; keep receipts/backups")
+    parser.add_argument("--no-bus", action="store_true", help="Do not participate in jev-bus; own every hook this package supports, as in 0.1.0")
+    parser.add_argument("--force-carrier", action="store_true", help="Take a host's transform hook even if another jev-bus package currently carries it")
     args = parser.parse_args(argv)
     try:
         if sys.version_info < (3, 10):
@@ -319,7 +338,14 @@ def main(argv=None):
         if args.doctor:
             print(json.dumps(tx.doctor(), indent=2)); return 0
         if args.uninstall:
-            print(json.dumps(tx.uninstall(args.apply), indent=2)); return 0
+            result = tx.uninstall(args.apply)
+            if args.apply and not args.no_bus:
+                from . import bus
+                # A vacated carrier slot is left empty rather than handed to whoever is
+                # left: the remaining package must reinstall to take the hook deliberately.
+                try: result["jev_bus"] = bus.unregister(PACKAGE)
+                except bus.BusError as exc: result["jev_bus"] = {"error": str(exc)}
+            print(json.dumps(result, indent=2)); return 0
         defaults = root_paths(home, dict(os.environ))
         roots: list[tuple[str, Path]] = []
         explicit_names = set()
@@ -344,12 +370,32 @@ def main(argv=None):
                        and t.get("native_prune_command") for t in prior_targets):
                     raise PruneError("Existing native adapter: repeat --experimental-adapters when updating, or uninstall before downgrading")
         source = Path(__file__).resolve().parents[1]
-        writes, targets = build_plan(source, data_home, roots, args.experimental_adapters, args.pi_choice, sys.executable)
+        writes, targets, stages = build_plan(source, data_home, roots, args.experimental_adapters, args.pi_choice, sys.executable)
+        bus_report = None
+        if not args.no_bus and stages:
+            from . import bus
+            carriers = {name: {"rank": bus.carrier_rank(PACKAGE, name), "root": str(safe_path(root))}
+                        for name, root in roots if name in bus.TRANSFORM_HOSTS}
+            bus_report = bus.register(PACKAGE, stages, carriers,
+                                      force_carrier=args.force_carrier, dry_run=not args.apply)
         if args.apply:
             report = tx.apply(writes, targets)
+            if bus_report is not None:
+                report["jev_bus"] = bus_report
+                for host, holder in bus_report["deferred_to"].items():
+                    report.setdefault("notes", []).append(
+                        f"jev-bus: {holder} carries {host}; this package runs as a stage in that carrier's chain "
+                        f"and registers no competing transform or /prune there.")
+                for host, previous in bus_report["took_over"].items():
+                    # Its stage entry is already in the registry, and its adapter reads the
+                    # carrier at load time, so a host restart is all that is needed.
+                    report.setdefault("notes", []).append(
+                        f"jev-bus: took the {host} carrier slot from {previous}, which ranks lower there. "
+                        f"Restart {host} so that package's adapter re-reads the registry and steps down to a stage.")
             if args.activate_hermes: report["hermes_activation"] = activate_hermes(targets)
         else:
             report = {"actions": tx.validate(writes, tx.records()), "targets": targets}
+            if bus_report is not None: report["jev_bus"] = bus_report
         report.update({"applied": args.apply, "remote_called": False,
                        "warning": "No universal native pruning/choice guarantee. Read each target's capabilities. Native adapters are not live-host tested."})
         print(json.dumps(report, indent=2))

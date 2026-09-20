@@ -21,7 +21,7 @@ class InstallTests(unittest.TestCase):
         return code,out.getvalue(),err.getvalue()
     def plan(self,exp=False):
         roots=list(root_paths(self.home,{}).items())
-        return build_plan(SOURCE,self.data,roots,exp,False,sys.executable)
+        return build_plan(SOURCE,self.data,roots,exp,False,sys.executable)[:2]
     def test_plan_writes_nothing(self):
         code,out,_=self.run_cli("--all")
         self.assertEqual(code,0); self.assertFalse(self.home.exists()); self.assertFalse(json.loads(out)["applied"])

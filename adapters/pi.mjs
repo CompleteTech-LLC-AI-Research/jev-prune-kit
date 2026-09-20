@@ -4,8 +4,10 @@
  * cancels compaction; the user must resume explicitly. No fake summary is emitted.
  */
 import { rpc, messageStamp, resultText } from "./bridge.mjs";
+import { runChain, formatPreview } from "./bus.mjs";
 
 const RECEIPT_TYPE = "jev-prune.receipts.v1";
+const PACKAGE = "jev-prune-kit";
 export default function createPi(pi, config, call = rpc) {
   let cached = null, busy = false;
   const sid = (ctx) => ctx.sessionManager.getSessionId();
@@ -39,18 +41,47 @@ export default function createPi(pi, config, call = rpc) {
   };
   pi.on("session_start", async () => { cached = null; busy = false; });
   pi.on("session_tree", async () => { cached = null; });
+  // This package is the jev-bus CARRIER for Pi: it owns the context hook and pipes the
+  // array through every registered stage, its own dedup included. Pi's context event has
+  // no system array, so acceptsSystemAppend is false and a stage returning one is ignored
+  // rather than having its text smuggled into the message list.
   pi.on("context", async (event, ctx) => {
     cached = { session: sid(ctx), messages: structuredClone(event.messages) };
     const list = receipts(ctx);
-    if (!list.length) return;
-    const result = await call(config, "project", sid(ctx), event.messages, list);
-    if (result.projection.invalid) notify(ctx, "Some old pruning proofs no longer match; original evidence retained.", "warning");
-    return { messages: result.messages };
+    let { messages, notes } = await runChain("pi", event.messages, {
+      session: sid(ctx), workspace: config.workspace || "", acceptsSystemAppend: false,
+    });
+    for (const note of notes) {
+      if (note.action === "passthrough" && !/no approved|no session/.test(note.detail || "")) {
+        notify(ctx, `${note.stage}: ${note.detail}; original context retained.`, "warning");
+      }
+    }
+    // The bus is ADDITIVE, never a prerequisite: if it contributed no stage of ours -- a
+    // skill-only install, an unreadable registry, or plain standalone use -- fall back to
+    // this package's own direct projection, exactly as before jev-bus existed.
+    if (!notes.some(n => String(n.stage || "").startsWith("jev-prune."))) {
+      if (!list.length) return;
+      const result = await call(config, "project", sid(ctx), event.messages, list);
+      if (result.projection.invalid) notify(ctx, "Some old pruning proofs no longer match; original evidence retained.", "warning");
+      return { messages: result.messages };
+    }
+    if (!Array.isArray(messages) || messages === event.messages) return;
+    return { messages };
   });
   pi.registerCommand("prune", {
     description: "Jev: omit validated repeated read results without summarizing (experimental)",
     handler: async (_args, ctx) => {
       if (!ctx.isIdle()) { notify(ctx, "Wait for an idle request boundary before /prune.", "warning"); return; }
+      // Show every stage's candidates first, attributed by package, then assess our own.
+      try {
+        if (cached?.messages) {
+          const { notes } = await runChain("pi", cached.messages, {
+            session: sid(ctx), op: "plan", workspace: config.workspace || "",
+            acceptsSystemAppend: false,
+          });
+          if (notes.length) notify(ctx, formatPreview(sid(ctx), notes));
+        }
+      } catch { /* a preview must never block the real command */ }
       try { await prune(ctx); } catch (err) { notify(ctx, String(err.message || err), "error"); }
     },
   });

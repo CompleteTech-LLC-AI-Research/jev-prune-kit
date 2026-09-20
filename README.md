@@ -213,6 +213,63 @@ residency policy. Do not enable it in a restricted environment without approval.
 These are in-code resource limits, not performance promises, and no probability
 threshold is a semantic safety guarantee.
 
+## Coexisting with `jev-context-fabric`
+
+[`jev-context-fabric`](https://github.com/CompleteTech-LLC-AI-Research/jev-context-fabric)
+prunes the *other half* of a transcript: it removes **old assistant prose** and injects
+retrieved evidence, where this kit substitutes **duplicate read result bodies**. Disjoint work,
+and genuinely complementary — but both wanted OpenCode's
+`experimental.chat.messages.transform` and both wanted `/prune`.
+
+**jev-bus** settles that: one **carrier** per host owns the hook, every other package runs as
+an ordered **stage** inside it.
+
+```
+Pi       ── carrier: jev-prune-kit      (this kit: sole Pi adapter)
+Hermes   ── carrier: jev-prune-kit      (this kit: real request middleware)
+OpenCode ── carrier: jev-context-fabric (implements V1 and V2; this kit is v1-era)
+
+  the chain, in every carrier:
+    100  jev-prune.dedup    claims tool-result:read
+    200  jev-context.view   claims assistant-prose, message-remove, system-append
+```
+
+Each stage declares the message classes it may touch. **Two packages claiming overlapping
+classes on one host is a hard install failure** — it replaces the prose-only rule in
+[COMPATIBILITY.md](docs/COMPATIBILITY.md) ("Do not combine this extension with another
+extension registering `/prune`") with something the installer enforces. Carrier slots go by a
+rank table both packages carry, so the assignment is the same whichever you install first.
+
+Order is load-bearing: `jev-context-fabric` keys messages by array position, so this kit's
+dedup runs **first** — projection substitutes bodies in place without changing the array
+length, so it cannot re-key the prose the other package owns.
+
+**What each side gains.** This kit reaches **OpenCode V2**, which it does not implement;
+`jev-context-fabric` reaches **Pi and Hermes**, where it has no adapter at all. Nothing changes
+for the skill-only targets — those hosts expose no outgoing-request transform, so neither
+package can project there with or without the bus.
+
+Where another package carries the host, this kit registers **no** `/prune` and performs **no**
+projection of its own; it still captures the request so assessment has something to work from,
+and contributes its dedup inside that carrier's chain.
+
+```sh
+python3 install.py --all --experimental-adapters          # plan; prints the jev_bus block
+python3 install.py --all --apply --experimental-adapters  # negotiate and write
+python3 install.py --all --apply --no-bus                 # opt out; standalone 0.1.0 behaviour
+python3 install.py --all --apply --force-carrier          # take a host from its current holder
+```
+
+> **The bus is additive, never a prerequisite.** A stage that errors, times out or returns an
+> unrecognized shape contributes nothing and the chain continues with that stage's own input;
+> if the chain contributes no stage of this kit, the adapter falls back to its own direct
+> projection exactly as before jev-bus existed. It approves nothing either, and **joining a
+> chain never starts a paid call** — a stage runs only the local `project`; assessment stays
+> behind `/prune` plus `JEV_PRUNE_ALLOW_REMOTE`.
+
+The full contract, including the wire format and vendored-file hashes, is
+[docs/BUS.md](docs/BUS.md) — byte-identical in both repositories.
+
 ## Profiles and containers
 
 The persistent runtime defaults to `~/.jev-prune/runtime`; override with
@@ -275,14 +332,14 @@ A snapshot is `{"format": "pi"|"opencode"|"openai", "session": "<exact-id>",
 ## Tests
 
 ```sh
-python3 -m unittest discover -s tests -v      # 73 tests
+python3 -m unittest discover -s tests -v      # 107 tests (27 of them jev-bus contract)
 node --test tests/native.test.mjs             # 15 tests, drives the real worker
 python3 examples/gate_demo.py --choice prune  # offline host-contract demo
 ```
 
 Set `PYTHON_BINARY` if `python3` is not the interpreter the Node suite should
 spawn. Raw logs from the reference run are in `tests-python.log` and
-`tests-node.log`. **88 passing local tests are not 88 live harness or model
+`tests-node.log`. **122 passing local tests are not 122 live harness or model
 tests** — evaluator responses are deterministic fixtures, not measured accuracy
 or savings. [VALIDATION.md](docs/VALIDATION.md) lists exactly what was and was
 not exercised.

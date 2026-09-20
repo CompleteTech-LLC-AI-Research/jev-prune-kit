@@ -42,8 +42,28 @@ def register(ctx, config):
         receipts, _ = store.load(session)
         if not receipts:
             return None
-        result, _ = project(snapshot("openai", session, messages), receipts)
-        return {"request": {**request, "messages": result}, "source": "jev-prune", "reason": "validated repeated-read projection"}
+        # This package is the jev-bus CARRIER for Hermes: it owns the llm_request
+        # middleware and pipes the array through every registered stage, its own dedup
+        # included. A Hermes request carries no separate system array here, so
+        # accepts_system_append is false and any stage append is ignored rather than
+        # being smuggled into the message list.
+        #
+        # The bus is ADDITIVE, never a prerequisite: if it contributed no stage of ours --
+        # a skill-only install, an unreadable registry, or plain standalone use -- fall back
+        # to this package's own direct projection, exactly as before jev-bus existed.
+        from jev_prune import bus
+
+        projected, notes, _ = bus.run_chain(
+            "hermes", messages, session=session, workspace=config.get("workspace", ""),
+            accepts_system_append=False)
+        if not any(str(n.get("stage", "")).startswith("jev-prune.") for n in notes):
+            projected, _ = project(snapshot("openai", session, messages), receipts)
+        if projected is messages or projected == messages:
+            return None  # nothing changed: pass the host's own request through untouched
+        acted = [n for n in notes if n.get("action") not in (None, "passthrough", "skipped")]
+        return {"request": {**request, "messages": projected}, "source": "jev-prune",
+                "reason": "; ".join(f"{n['stage']}: {n['action']}" for n in acted)
+                          or "validated repeated-read projection"}
 
     def command(raw_args):
         if os.environ.get("JEV_PRUNE_HERMES_SINGLE_USER") != "1":

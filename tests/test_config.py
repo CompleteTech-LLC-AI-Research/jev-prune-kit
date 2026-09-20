@@ -85,7 +85,7 @@ class ConfigTests(unittest.TestCase):
             shutil.copy2(source / name, root / name)
         for name in (".env", ".env.backup.json", "jev_prune/.env.private.json"):
             (root / name).write_text("PRIVATE_SENTINEL", encoding="utf-8")
-        plan, _ = build_plan(root, root / "data", [], False, False, sys.executable)
+        plan, _, _ = build_plan(root, root / "data", [], False, False, sys.executable)
         self.assertFalse(any(b"PRIVATE_SENTINEL" in item.data for item in plan))
         subprocess.run([sys.executable, str(root / "build_release.py")],
                        check=True, capture_output=True)
