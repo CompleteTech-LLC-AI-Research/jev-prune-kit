@@ -1,0 +1,924 @@
+{
+  "pi": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Read the fixture."
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "a",
+            "name": "read",
+            "arguments": {
+              "path": "fixture.txt"
+            }
+          }
+        ]
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "a",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. "
+          }
+        ],
+        "isError": false
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "toolCall",
+            "id": "b",
+            "name": "read",
+            "arguments": {
+              "path": "fixture.txt"
+            }
+          }
+        ]
+      },
+      {
+        "role": "toolResult",
+        "toolCallId": "b",
+        "toolName": "read",
+        "content": [
+          {
+            "type": "text",
+            "text": "An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. "
+          }
+        ],
+        "isError": false
+      },
+      {
+        "role": "user",
+        "content": "Continue the fixture task; keep all constraints."
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 0"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 1"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 2"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 3"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 4"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 5"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 6"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 7"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 8"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 9"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 10"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 11"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 12"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 13"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 14"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 15"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 16"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 17"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 18"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 19"
+          }
+        ]
+      }
+    ],
+    "result": {
+      "revision": "c94b456015b3afaf83bc2ff76afaf6cb2d53cb01940f9f7e62ba426ca5700258",
+      "receipts": [
+        {
+          "policy": "exact-read-repeat-v1",
+          "model": "jev-1.13.0",
+          "session": "s",
+          "format": "pi",
+          "source": {
+            "id": "a",
+            "hash": "e4a562eddf926c8574c8784a12da59623e787d0c7a8f68c081e677b6756620f9",
+            "request": "49e23594cce0c00fb66c49d949064c1577d7406a22ee69ebd53231c37d36be5e"
+          },
+          "witness": {
+            "id": "b",
+            "hash": "b7e9b4b0b01e87fc15d5ae881bcf54214510a2833415b7a62c2d0f105db92179",
+            "request": "49e23594cce0c00fb66c49d949064c1577d7406a22ee69ebd53231c37d36be5e"
+          }
+        }
+      ],
+      "considered": 1,
+      "added": 1,
+      "model": "jev-1.13.0",
+      "projection": {
+        "applied": 1,
+        "inactive": 0,
+        "invalid": 0,
+        "body_bytes_removed": 1349
+      }
+    }
+  },
+  "openai": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Read the fixture."
+      },
+      {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "type": "function",
+            "id": "a",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"fixture.txt\"}"
+            }
+          }
+        ]
+      },
+      {
+        "role": "tool",
+        "tool_call_id": "a",
+        "content": "An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. "
+      },
+      {
+        "role": "assistant",
+        "content": null,
+        "tool_calls": [
+          {
+            "type": "function",
+            "id": "b",
+            "function": {
+              "name": "read_file",
+              "arguments": "{\"path\":\"fixture.txt\"}"
+            }
+          }
+        ]
+      },
+      {
+        "role": "tool",
+        "tool_call_id": "b",
+        "content": "An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. "
+      },
+      {
+        "role": "user",
+        "content": "Continue the fixture task; keep all constraints."
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 0"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 1"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 2"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 3"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 4"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 5"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 6"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 7"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 8"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 9"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 10"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 11"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 12"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 13"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 14"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 15"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 16"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 17"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 18"
+          }
+        ]
+      },
+      {
+        "role": "assistant",
+        "content": [
+          {
+            "type": "text",
+            "text": "Progress 19"
+          }
+        ]
+      }
+    ],
+    "result": {
+      "revision": "9468bbf5053ee17d7fc9bb6ab3cc9047190cd0b2b0c4d2b911431575785f002f",
+      "receipts": [
+        {
+          "policy": "exact-read-repeat-v1",
+          "model": "jev-1.13.0",
+          "session": "s",
+          "format": "openai",
+          "source": {
+            "id": "a",
+            "hash": "5ce6915e2a2e68aa33f4c6d57ebf465d3d076a1e30ed77105c920306851da0fa",
+            "request": "70d6f89425d709a93cb757e560d9e776174df3f9215e9320de419dff08112b71"
+          },
+          "witness": {
+            "id": "b",
+            "hash": "53c723f4572b496ff95e86ebaa4856e17fe1bb0461ebba2d3e4e50f449e1514b",
+            "request": "70d6f89425d709a93cb757e560d9e776174df3f9215e9320de419dff08112b71"
+          }
+        }
+      ],
+      "considered": 1,
+      "added": 1,
+      "model": "jev-1.13.0",
+      "projection": {
+        "applied": 1,
+        "inactive": 0,
+        "invalid": 0,
+        "body_bytes_removed": 1349
+      }
+    }
+  },
+  "opencode": {
+    "messages": [
+      {
+        "info": {
+          "id": "msg0",
+          "sessionID": "s",
+          "role": "user"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Read the fixture."
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg1",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg2",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "id": "a",
+            "type": "tool",
+            "callID": "a",
+            "tool": "read",
+            "state": {
+              "status": "completed",
+              "input": {
+                "filePath": "fixture.txt"
+              },
+              "output": "An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. "
+            }
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg3",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg4",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "id": "b",
+            "type": "tool",
+            "callID": "b",
+            "tool": "read",
+            "state": {
+              "status": "completed",
+              "input": {
+                "filePath": "fixture.txt"
+              },
+              "output": "An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. "
+            }
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg5",
+          "sessionID": "s",
+          "role": "user"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Continue the fixture task; keep all constraints."
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg6",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg7",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg8",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg9",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg10",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg11",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg12",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg13",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg14",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg15",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg16",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg17",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg18",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg19",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg20",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg21",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg22",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg23",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg24",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      },
+      {
+        "info": {
+          "id": "msg25",
+          "sessionID": "s",
+          "role": "assistant"
+        },
+        "parts": [
+          {
+            "type": "text",
+            "text": "Other assistant content"
+          }
+        ]
+      }
+    ],
+    "result": {
+      "revision": "f47915a580ae12aba0905631ec2b11d9690e159e2804d6e9888d2cade236d07d",
+      "receipts": [
+        {
+          "policy": "exact-read-repeat-v1",
+          "model": "jev-1.13.0",
+          "session": "s",
+          "format": "opencode",
+          "source": {
+            "id": "a",
+            "hash": "00b0480e865672bde76fb5766ea2d83d2709c387a3a6073ef5e9756847847608",
+            "request": "db45043c1f49ae695fc7e233dcb3c9538fc3015f058b609a39b1bc44b479b500"
+          },
+          "witness": {
+            "id": "b",
+            "hash": "bfedf4dc0c76869a9bd7376e7ca2383b1aa3538a4873283cebb474dd9978dfd9",
+            "request": "db45043c1f49ae695fc7e233dcb3c9538fc3015f058b609a39b1bc44b479b500"
+          }
+        }
+      ],
+      "considered": 1,
+      "added": 1,
+      "model": "jev-1.13.0",
+      "projection": {
+        "applied": 1,
+        "inactive": 0,
+        "invalid": 0,
+        "body_bytes_removed": 1349
+      }
+    }
+  }
+}

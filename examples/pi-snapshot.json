@@ -1,0 +1,245 @@
+{
+  "format": "pi",
+  "session": "s",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Read the fixture."
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "toolCall",
+          "id": "a",
+          "name": "read",
+          "arguments": {
+            "path": "fixture.txt"
+          }
+        }
+      ]
+    },
+    {
+      "role": "toolResult",
+      "toolCallId": "a",
+      "toolName": "read",
+      "content": [
+        {
+          "type": "text",
+          "text": "An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. "
+        }
+      ],
+      "isError": false
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "toolCall",
+          "id": "b",
+          "name": "read",
+          "arguments": {
+            "path": "fixture.txt"
+          }
+        }
+      ]
+    },
+    {
+      "role": "toolResult",
+      "toolCallId": "b",
+      "toolName": "read",
+      "content": [
+        {
+          "type": "text",
+          "text": "An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. An immutable fixture file contains the same verified text. "
+        }
+      ],
+      "isError": false
+    },
+    {
+      "role": "user",
+      "content": "Continue the fixture task; keep all constraints."
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 0"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 1"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 2"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 3"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 4"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 5"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 6"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 7"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 8"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 9"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 10"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 11"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 12"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 13"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 14"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 15"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 16"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 17"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 18"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "Progress 19"
+        }
+      ]
+    }
+  ],
+  "receipts": []
+}
