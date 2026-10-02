@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/banner.jpg" alt="A stream of document cards passes through a telescope lens filter; duplicates fade while one retained amber card stays bright." width="100%"></p>
+
 <div align="center">
 
 # Jev Prune Kit
