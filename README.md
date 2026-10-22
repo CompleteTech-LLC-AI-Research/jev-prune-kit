@@ -366,3 +366,7 @@ not exercised.
 
 There is no MCP server in this kit. An MCP assessment tool alone would not grant
 context-editing authority.
+
+## License
+
+Code and documentation are released under the [MIT License](LICENSE).
