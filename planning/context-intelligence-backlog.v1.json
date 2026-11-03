@@ -1,0 +1,991 @@
+{
+  "schema": "jev-context-intelligence-backlog/v1",
+  "created_on": "2026-11-03",
+  "vision": "Lowest total cost of CORRECT completion via immutable evidence, Jev/System-1 selective context, cache-aware routing and fail-closed multi-agent governance.",
+  "source_repositories": {
+    "prune": "https://github.com/Jev-Engineering/jev-prune-kit",
+    "prune_tracking": "https://github.com/CompleteTech-LLC-AI-Research/jev-prune-kit",
+    "fabric": "https://github.com/CompleteTech-LLC-AI-Research/jev-context-fabric"
+  },
+  "default_destinations": {
+    "prune": "CompleteTech-LLC-AI-Research/jev-prune-kit",
+    "fabric": "CompleteTech-LLC-AI-Research/jev-context-fabric"
+  },
+  "epics": [
+    {
+      "id": "P-EPIC",
+      "repo": "prune",
+      "kind": "epic",
+      "existing_url": "https://github.com/CompleteTech-LLC-AI-Research/jev-prune-kit/issues/5",
+      "title": "Context Pruning v2 — safe, incremental, cache-aware projections"
+    },
+    {
+      "id": "F-EPIC",
+      "repo": "fabric",
+      "kind": "epic",
+      "existing_url": "https://github.com/CompleteTech-LLC-AI-Research/jev-context-fabric/issues/2",
+      "title": "Context Intelligence Fabric — shared memory, caching and cost-aware model routing"
+    }
+  ],
+  "records": [
+    {
+      "id": "P-F01",
+      "repo": "prune",
+      "kind": "feature",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-EPIC",
+      "depends_on": [],
+      "title": "Canonical tool outcome and failure semantics",
+      "description": "Extend exact-read selectors into an explicit success/failure/pending result taxonomy without confusing error messages with authorization or semantics.",
+      "acceptance": [
+        "Typed outcomes distinguish success, terminal failure, retryable failure and unresolved operation.",
+        "Normalization is backward-compatible with Pi/OpenCode/OpenAI and fail-closed for ambiguous custom tools."
+      ]
+    },
+    {
+      "id": "P-T01",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F01",
+      "depends_on": [],
+      "title": "Build per-harness tool outcome adapters",
+      "description": "Normalize tool call ID, arguments, status, stdout/stderr, error code, redaction, provenance and timestamps across supported hosts.",
+      "acceptance": [
+        "Fixtures verify all supported formats, missing status and counterfeit success flags."
+      ]
+    },
+    {
+      "id": "P-T02",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F01",
+      "depends_on": [
+        "P-T01"
+      ],
+      "title": "Implement failure condensation preserving actionable errors",
+      "description": "Convert noisy failed call sequences to precise failure facts (permission denied, missing resource, invalid arguments, network timeout) with links to originals.",
+      "acceptance": [
+        "Same failure repeated ten times retains cause and retry guidance once; non-equivalent failures are not conflated."
+      ]
+    },
+    {
+      "id": "P-T03",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F01",
+      "depends_on": [
+        "P-T01",
+        "P-T02"
+      ],
+      "title": "Classify retryable, terminal, resolved and pending failures",
+      "description": "Track whether a failure was superseded by success, left unresolved, or signals important constraints; don't assume success erases prior evidence.",
+      "acceptance": [
+        "Regression cases protect auth errors, security denials, partial writes and unfinished jobs; insignificant retries can be omitted from views."
+      ]
+    },
+    {
+      "id": "P-F02",
+      "repo": "prune",
+      "kind": "feature",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-EPIC",
+      "depends_on": [],
+      "title": "Provenance-safe semantic/line-span pruning",
+      "description": "Move beyond byte-identical files to selectively retaining relevant spans with reversible, source-linked witnesses and deterministic protected categories.",
+      "acceptance": [
+        "Every projected segment has a stable source range and proof; exact original is recoverable.",
+        "No protected instruction, constraint, citation, decision or unresolved dependency can be silently dropped."
+      ]
+    },
+    {
+      "id": "P-T04",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F02",
+      "depends_on": [
+        "P-T01"
+      ],
+      "title": "Define canonical segment IDs and source-span receipts",
+      "description": "Represent message and line/paragraph ranges, content hashes, source versions and redacted audit metadata for targeted projections.",
+      "acceptance": [
+        "Round-trip restores exact canonical content and rejects stale hashes, changed tool content and overlapping projections."
+      ]
+    },
+    {
+      "id": "P-T05",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F02",
+      "depends_on": [
+        "P-T04"
+      ],
+      "title": "Implement protected evidence and dependency graph",
+      "description": "Pin user/developer/system constraints, decisions, citations, security evidence, unresolved actions and prerequisites before selecting candidates.",
+      "acceptance": [
+        "Synthetic counterexamples preserve unique causal links and requirements even when a model rates them low relevance."
+      ]
+    },
+    {
+      "id": "P-T06",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F02",
+      "depends_on": [
+        "P-T04",
+        "P-T05"
+      ],
+      "title": "Add bounded semantic pruning with Jev and escalation",
+      "description": "Expose replaceable evaluator interface, local deterministic prefilters, abstain/escalate logic and no-op fallback for uncertain predictions.",
+      "acceptance": [
+        "Only approved, provenance-backed spans are projected; evaluator uncertainty, parse failure or timeout preserves originals."
+      ]
+    },
+    {
+      "id": "P-F03",
+      "repo": "prune",
+      "kind": "feature",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "P-EPIC",
+      "depends_on": [],
+      "title": "Incremental context curation and cost-bounded evaluation",
+      "description": "Avoid repeatedly rereading the entire context on every turn by updating relevance against deltas and snapshots while bounding evaluator overhead.",
+      "acceptance": [
+        "Unchanged inputs reuse verified decisions; changes invalidate only affected proofs.",
+        "Optimization stops when expected savings do not exceed assessment cost and quality-risk budget."
+      ]
+    },
+    {
+      "id": "P-T07",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "P-F03",
+      "depends_on": [
+        "P-T04"
+      ],
+      "title": "Build change-stream relevance index",
+      "description": "Process new messages/tool events incrementally, preserving dependency versioning and protected tail limits.",
+      "acceptance": [
+        "Repeated no-op turn yields no paid assessment; edits to dependency invalidate affected segments only."
+      ]
+    },
+    {
+      "id": "P-T08",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "P-F03",
+      "depends_on": [
+        "P-T07"
+      ],
+      "title": "Implement versioned state and safe receipt migration",
+      "description": "Persist revisioned pruning decisions and restart/fork-safe projection state with conflict detection.",
+      "acceptance": [
+        "Crash/restart/fork tests never apply another session's receipts, including after model changes."
+      ]
+    },
+    {
+      "id": "P-T09",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "P-F03",
+      "depends_on": [
+        "P-T06"
+      ],
+      "title": "Implement configurable Jev budget, threshold and escalation policy",
+      "description": "Expose evaluator costs, rate limits, batching, privacy/residency controls and optional stronger-model review.",
+      "acceptance": [
+        "No hidden paid requests; spending cap, dry run, abort, backpressure and refusal are tested."
+      ]
+    },
+    {
+      "id": "P-F04",
+      "repo": "prune",
+      "kind": "feature",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "P-EPIC",
+      "depends_on": [],
+      "title": "Real host scheduler and token budget parity",
+      "description": "Promote reference decision gate to verified native integrations with authoritative next-request token counts, resumability and native compaction isolation.",
+      "acceptance": [
+        "A successful prune changes actual model input and can resume safely when host contracts allow.",
+        "Host capability matrix distinguishes tested runtime/version from experimental or unsupported integrations."
+      ]
+    },
+    {
+      "id": "P-T10",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "P-F04",
+      "depends_on": [
+        "P-T06"
+      ],
+      "title": "Implement model-aware next-inference token budgeting",
+      "description": "Count full rendered request with proper tokenizer, tool schema, attachments, reserved output and uncertainty margin; report unknown when unsupported.",
+      "acceptance": [
+        "Hard context limits tested for multiple models and host formats; no byte-derived READY decision."
+      ]
+    },
+    {
+      "id": "P-T11",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "P-F04",
+      "depends_on": [
+        "P-T10",
+        "P-T08"
+      ],
+      "title": "Implement native Prune/Compact/Pause lifecycle and CAS",
+      "description": "Wire Gate state machine to supported native scheduler boundaries, protect pending tasks, explicit approval and revision conflict checks.",
+      "acceptance": [
+        "Prune never silently invokes compact; canceled/stale selection cannot resume or mutate another request."
+      ]
+    },
+    {
+      "id": "P-T12",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "P-F04",
+      "depends_on": [
+        "P-T11"
+      ],
+      "title": "Validate real Pi, OpenCode and Hermes request projections",
+      "description": "Test adapter loading, host-version negotiation, live-model request interception, single-user Hermes guard and platform restart behavior.",
+      "acceptance": [
+        "Evidence captures actual outbound request and no-op paths; unsupported hosts never claim live pruning."
+      ]
+    },
+    {
+      "id": "P-F05",
+      "repo": "prune",
+      "kind": "feature",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "P-EPIC",
+      "depends_on": [],
+      "title": "Cache-aware pruning decision contracts",
+      "description": "Optimize whether to prune only after comparing token reduction to provider prompt-prefix reuse and router/model selection costs.",
+      "acceptance": [
+        "Existing cache hits are not invalidated by default for marginal token savings.",
+        "Versioned adapter contract exchanges candidate context hashes and measurable cost estimates without passing sensitive source bytes."
+      ]
+    },
+    {
+      "id": "P-T13",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "P-F05",
+      "depends_on": [
+        "P-T04"
+      ],
+      "title": "Represent prompt-cache prefix stability and invalidation",
+      "description": "Report exact prefix hash, provider/model cache scope, TTL/eligibility and whether transformation breaks native cache.",
+      "acceptance": [
+        "Tests show changed early message invalidates affected prefixes and unchanged suffixes are not counted as guaranteed hits."
+      ]
+    },
+    {
+      "id": "P-T14",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "P-F05",
+      "depends_on": [
+        "P-T13",
+        "P-T10"
+      ],
+      "title": "Compare unpruned, pruned and routed context plans",
+      "description": "Estimate cost/latency/risk using real cache discounts, evaluator overhead, retries and quality floor; allow forced no-op.",
+      "acceptance": [
+        "Scenario tests select cached longer prefix when cheaper, even if pruning reduces raw tokens."
+      ]
+    },
+    {
+      "id": "P-T15",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "P-F05",
+      "depends_on": [
+        "P-T13",
+        "P-T04"
+      ],
+      "title": "Version jev-bus context-projection and cache telemetry contract",
+      "description": "Publish interoperable schema including claim scope, tenant/session, source receipts, projection/cost metadata and error behavior.",
+      "acceptance": [
+        "Cross-project contract suite rejects conflicting claim owners, unknown versions and untrusted caller mutations."
+      ]
+    },
+    {
+      "id": "P-F06",
+      "repo": "prune",
+      "kind": "feature",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-EPIC",
+      "depends_on": [],
+      "title": "Security boundaries, rollback and auditability",
+      "description": "Strengthen safety around untrusted context, secrets, tool results, cross-session scope and reversible decision provenance.",
+      "acceptance": [
+        "No tool result can inject evaluator policy or authorize pruning.",
+        "Auditors can explain why a span was kept/omitted and restore original active context without deleting history."
+      ]
+    },
+    {
+      "id": "P-T16",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F06",
+      "depends_on": [],
+      "title": "Document adversarial pruning threat model",
+      "description": "Address prompt injection, poisoned source, redaction escape, auth-denial removal, hallucinated success and compromised evaluator.",
+      "acceptance": [
+        "Negative fixtures exercise each threat; mitigation matrix names residual risks."
+      ]
+    },
+    {
+      "id": "P-T17",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F06",
+      "depends_on": [
+        "P-T16"
+      ],
+      "title": "Enforce tenant/workspace/session policy before projections",
+      "description": "Require trusted scope binding, principal authorization and strict non-merge semantics for multi-agent/shared instances.",
+      "acceptance": [
+        "Cross-tenant and reused session ID attacks cannot read or prune each other's records."
+      ]
+    },
+    {
+      "id": "P-T18",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "P-F06",
+      "depends_on": [
+        "P-T04",
+        "P-T17"
+      ],
+      "title": "Harden audit proofs, approval and rollback lifecycle",
+      "description": "Store reason codes, canonical hashes, proof graph, applied-view revisions and explicit restore while keeping source immutable.",
+      "acceptance": [
+        "Concurrency and stale proof tests fail closed; audit output never leaks credential-bearing content."
+      ]
+    },
+    {
+      "id": "P-F07",
+      "repo": "prune",
+      "kind": "feature",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "P-EPIC",
+      "depends_on": [],
+      "title": "Benchmarking, reliability and release-readiness",
+      "description": "Prove actual task and cost improvement over baseline under realistic models, hosts, cache configurations and adversarial cases.",
+      "acceptance": [
+        "Report task success, token costs, cache hits, retries and latency with confidence intervals.",
+        "Do not declare production readiness using only synthetic byte counts or mocked hosts."
+      ]
+    },
+    {
+      "id": "P-T19",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "P-F07",
+      "depends_on": [
+        "P-T12",
+        "P-T14"
+      ],
+      "title": "Build reproducible pruning benchmark harness",
+      "description": "Include long coding sessions, repeated reads, failed tools, search/research agents, huge context and multi-model caches.",
+      "acceptance": [
+        "Comparisons use identical tasks and model settings; results include unmodified and no-op baselines."
+      ]
+    },
+    {
+      "id": "P-T20",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "P-F07",
+      "depends_on": [
+        "P-T05",
+        "P-T16"
+      ],
+      "title": "Test retention quality, regression and adversarial suites",
+      "description": "Score constraint recall, citation correctness, error diagnosis, end-task success and unsafe omission rates.",
+      "acceptance": [
+        "Known critical failures cause a release blocker; publish raw fixtures and per-case traces."
+      ]
+    },
+    {
+      "id": "P-T21",
+      "repo": "prune",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "P-F07",
+      "depends_on": [
+        "P-T19",
+        "P-T20"
+      ],
+      "title": "Measure robustness and publish a verified deployment matrix",
+      "description": "Exercise concurrency, cancellation, replay, fork, WSL/Linux/Windows/macOS and provider cache interactions.",
+      "acceptance": [
+        "Release notes distinguish tested vs experimental behavior and measured vs modeled savings."
+      ]
+    },
+    {
+      "id": "F-F01",
+      "repo": "fabric",
+      "kind": "feature",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "F-EPIC",
+      "depends_on": [],
+      "title": "Canonical evidence governance and isolation",
+      "description": "Harden source-backed store, typed role signals and lineage to support safe multi-agent and cross-session reuse.",
+      "acceptance": [
+        "All derived views link to immutable or revision-tracked evidence and tenant/workspace/session scope.",
+        "Evidence can be superseded without deleting historical truth and is never treated as authority."
+      ]
+    },
+    {
+      "id": "F-T01",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "F-F01",
+      "depends_on": [],
+      "title": "Add append-only provenance and semantic event schema",
+      "description": "Capture observation/fact/claim/decision/constraint/attempt/failure/success, parent IDs, hashes, timestamps, author and status.",
+      "acceptance": [
+        "Replay reconstructs lifecycle with citations; later correction preserves earlier evidence."
+      ]
+    },
+    {
+      "id": "F-T02",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "F-F01",
+      "depends_on": [
+        "F-T01"
+      ],
+      "title": "Implement principal/tenant isolation and cross-agent sharing policy",
+      "description": "Replace sole worktree-based trust with explicit authorization for source access, hydration, write operations and scoped shared caches.",
+      "acceptance": [
+        "Identical worktree path for different principals does not cross-leak; deny rules tested for MCP/HTTP/bridge."
+      ]
+    },
+    {
+      "id": "F-T03",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "F-F01",
+      "depends_on": [
+        "F-T01"
+      ],
+      "title": "Add derived evidence invalidation and conflict resolution",
+      "description": "Track source revisions, file changes, branch divergence, staleness and conflicting facts without claiming a hash means truth.",
+      "acceptance": [
+        "Changed source invalidates dependent retrieval features and context views; replay restores exact supported state."
+      ]
+    },
+    {
+      "id": "F-F02",
+      "repo": "fabric",
+      "kind": "feature",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-EPIC",
+      "depends_on": [],
+      "title": "Task-aware context assembly and retrieval",
+      "description": "Assemble tailored, auditable per-model context using constraints, evidence, reusable blocks and incremental state, avoiding whole-history reprocessing.",
+      "acceptance": [
+        "Generated context package meets a real tokenizer budget including tool schemas and output reserves.",
+        "Reasons for inclusion/exclusion and source references are inspectable and reversible."
+      ]
+    },
+    {
+      "id": "F-T04",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F02",
+      "depends_on": [
+        "F-T01"
+      ],
+      "title": "Introduce model/agent/task context profiles and real tokenizers",
+      "description": "Support context length, output reserve, tool budgets, ordering, pinned constraints and per-provider cache-prefix requirements.",
+      "acceptance": [
+        "Different target models receive correctly sized bundles; unknown tokenizer uses safe fallback."
+      ]
+    },
+    {
+      "id": "F-T05",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F02",
+      "depends_on": [
+        "F-T01",
+        "F-T03"
+      ],
+      "title": "Add provenance-first retrieval with citations and page faults",
+      "description": "Expand FTS/BM25 and typed relation retrieval with source range, rerank explanation and hydration on demand.",
+      "acceptance": [
+        "Question-answer benchmarks measure recall of critical constraints and evidence, not just character reduction."
+      ]
+    },
+    {
+      "id": "F-T06",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F02",
+      "depends_on": [
+        "F-T04",
+        "F-T05"
+      ],
+      "title": "Make context assembly incremental and revision aware",
+      "description": "Reevaluate only changed/new evidence and task state, with stable block IDs, dedup and budgeted partial hydration.",
+      "acceptance": [
+        "Unchanged turns skip remote evaluator; mid-task corrections invalidate affected blocks without erasing audit history."
+      ]
+    },
+    {
+      "id": "F-F03",
+      "repo": "fabric",
+      "kind": "feature",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-EPIC",
+      "depends_on": [],
+      "title": "Shared context and response cache stack",
+      "description": "Provide composable caches for reusable evidence/context and safe exact/semantic responses above any provider, with scope-checked keys and controlled TTLs.",
+      "acceptance": [
+        "Cache keys bind task, model/provider relevant parameters, source versions, policy and principal scope.",
+        "No unsafe semantic substitution for tool execution, security answers or time-sensitive facts."
+      ]
+    },
+    {
+      "id": "F-T07",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F03",
+      "depends_on": [
+        "F-T02"
+      ],
+      "title": "Implement exact deterministic response cache interface",
+      "description": "Add Redis/Valkey/local backends, canonical request hashing, TTL/eviction, secret-safe keying and cache provenance.",
+      "acceptance": [
+        "Responses match all correctness-affecting parameters; streaming/tool side effects are never replayed as if executed."
+      ]
+    },
+    {
+      "id": "F-T08",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F03",
+      "depends_on": [
+        "F-T07"
+      ],
+      "title": "Implement optional semantic response cache with safety gates",
+      "description": "Define embedding/rerank adapters, similarity calibration, freshness invalidation, low-risk eligibility and model/task overrides.",
+      "acceptance": [
+        "Counterexamples reject falsely similar prompts, personalized/secret and stale answers; exact-cache fallback supported."
+      ]
+    },
+    {
+      "id": "F-T09",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F03",
+      "depends_on": [
+        "F-T03",
+        "F-T02"
+      ],
+      "title": "Implement shared reusable evidence/context-block cache",
+      "description": "Cache verified source references, excerpts, typed classifications, content fingerprints and access restrictions across agents.",
+      "acceptance": [
+        "Authorized agents reuse blocks without recomputation; changes and permission revocations invalidate affected entries."
+      ]
+    },
+    {
+      "id": "F-F04",
+      "repo": "fabric",
+      "kind": "feature",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-EPIC",
+      "depends_on": [],
+      "title": "Provider-native prefix caches and compatible local KV reuse",
+      "description": "Maximize prompt prefix reuse while explicitly separating reusable text/context from vendor- and model-specific internal KV caches.",
+      "acceptance": [
+        "Anthropic-style cache breakpoints and OpenAI/Gemini cache hints are capability-aware, not treated as universal semantics.",
+        "An optional local-KV adapter may share compatible self-hosted model caches only with matching model/runtime/configuration."
+      ]
+    },
+    {
+      "id": "F-T10",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F04",
+      "depends_on": [
+        "F-T04",
+        "F-T09"
+      ],
+      "title": "Implement provider-aware prompt cache planner",
+      "description": "Version provider capability registry, TTL/breakpoints, stable prompt ordering, creation/reads and eligibility; measure cache hit evidence.",
+      "acceptance": [
+        "Unit tests prove unsupported providers do not receive fabricated cache controls, and edited prefixes invalidate native cache."
+      ]
+    },
+    {
+      "id": "F-T11",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F04",
+      "depends_on": [
+        "F-T10"
+      ],
+      "title": "Evaluate optional LMCache/vLLM-style compatible KV layer",
+      "description": "Define pluggable adapter for model/version/tokenizer-compatible KV sharing with memory pressure and security controls.",
+      "acceptance": [
+        "Interop tests prove incompatible models/tokenizers never reuse KV; feature off by default for hosted providers."
+      ]
+    },
+    {
+      "id": "F-T12",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F04",
+      "depends_on": [
+        "F-T10",
+        "F-T07"
+      ],
+      "title": "Track cache lineage, expiry, freshness and economics",
+      "description": "Record observed cache-read/write tokens and estimated break-even, invalidation, warm-up and fallback; expose explain decisions.",
+      "acceptance": [
+        "Telemetry distinguishes hit, miss, ineligible and unknown; no model-agnostic provider KV reuse claims."
+      ]
+    },
+    {
+      "id": "F-F05",
+      "repo": "fabric",
+      "kind": "feature",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-EPIC",
+      "depends_on": [],
+      "title": "Pluggable intelligent routing and gateway integration",
+      "description": "Connect to LiteLLM/Bifrost/OpenAI-compatible gateways and optional RouteLLM-style policies, selecting an execution path based on quality, effective cost, context fit and cache.",
+      "acceptance": [
+        "No vendor lock-in; failover path respects data residency, rate limits and budget ceilings.",
+        "Router explains selection, can pin a model, and reports actual billable usage."
+      ]
+    },
+    {
+      "id": "F-T13",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F05",
+      "depends_on": [
+        "F-T04"
+      ],
+      "title": "Create gateway adapter contracts with LiteLLM and Bifrost reference implementations",
+      "description": "Normalize model catalog, health, rate limits, pricing, caching support, tool calling, auth and tenancy; support mock/offline mode.",
+      "acceptance": [
+        "Simulated gateway swap preserves task semantics; feature/capability detection fails safely."
+      ]
+    },
+    {
+      "id": "F-T14",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F05",
+      "depends_on": [
+        "F-T13"
+      ],
+      "title": "Integrate RouteLLM-style task complexity and model suitability policy",
+      "description": "Evaluate simple vs hard tasks using replaceable classifier, model performance priors, risk constraints and uncertainty escalation.",
+      "acceptance": [
+        "Benchmark shows classification overhead does not exceed savings; allow a fixed-route baseline."
+      ]
+    },
+    {
+      "id": "F-T15",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P1",
+      "priority": "high",
+      "parent": "F-F05",
+      "depends_on": [
+        "F-T14",
+        "F-T12"
+      ],
+      "title": "Implement cache-, cost-, reliability- and quality-aware planner",
+      "description": "Optimize expected total task cost including input/output token discounts, latency, failure/retry probability, context preparation and tool costs.",
+      "acceptance": [
+        "Scenario replay shows cached expensive model beating uncached cheaper model when effective cost is lower; quality floors hold."
+      ]
+    },
+    {
+      "id": "F-F06",
+      "repo": "fabric",
+      "kind": "feature",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "F-EPIC",
+      "depends_on": [],
+      "title": "Agentic tool routing and adaptive memory feedback",
+      "description": "Route jobs to models and tools using task constraints, completed tool outcomes, available context and durable feedback without overfitting opaque model grades.",
+      "acceptance": [
+        "Actions and tools are never authorized by retrieved content.",
+        "Successful paths become reusable evidence while failure causes remain retrievable."
+      ]
+    },
+    {
+      "id": "F-T16",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "F-F06",
+      "depends_on": [
+        "F-T15"
+      ],
+      "title": "Define agent task contracts and tool capability routing",
+      "description": "Represent permissioned tools, job risk, latency/cost ceilings, required modalities and output validity checks.",
+      "acceptance": [
+        "Router refuses unauthorized tool/model combinations and can reroute after measured failure."
+      ]
+    },
+    {
+      "id": "F-T17",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "F-F06",
+      "depends_on": [
+        "F-T01",
+        "F-T16"
+      ],
+      "title": "Store verified outcomes and feedback loops",
+      "description": "Record downstream task success, retry, test pass/fail, user correction and evidence quality for later ranking.",
+      "acceptance": [
+        "Unverified model self-grading never becomes ground truth; feedback lineage and opt-out supported."
+      ]
+    },
+    {
+      "id": "F-T18",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "F-F06",
+      "depends_on": [
+        "F-T05",
+        "F-T06"
+      ],
+      "title": "Implement context-fault detection and on-demand rehydration",
+      "description": "Expose explicit missing-context signals and bounded source hydration to restore critical facts during execution.",
+      "acceptance": [
+        "A model recovers omitted citation or constraint without full transcript replay; permission-denied faults remain denied."
+      ]
+    },
+    {
+      "id": "F-F07",
+      "repo": "fabric",
+      "kind": "feature",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "F-EPIC",
+      "depends_on": [],
+      "title": "Cost, quality and cache-economics evaluation program",
+      "description": "Build task-level controlled experiments measuring correct outcomes rather than isolated inference token reduction.",
+      "acceptance": [
+        "Benchmark compares naive baseline, static compaction, pruning only, cache only and combined adaptive optimization.",
+        "Report actual cost, quality and latency with per-provider breakdown and uncertainty."
+      ]
+    },
+    {
+      "id": "F-T19",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "F-F07",
+      "depends_on": [
+        "F-T04",
+        "F-T13"
+      ],
+      "title": "Build replayable end-to-end benchmark dataset",
+      "description": "Use coding, research, long contexts, repeated tools, failures, prompt injection and cross-agent tasks with gold outcome checks.",
+      "acceptance": [
+        "Fixture suite covers cache-hit, cache-miss and changed-context cases; reproduce results from pinned versions."
+      ]
+    },
+    {
+      "id": "F-T20",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "F-F07",
+      "depends_on": [
+        "F-T12"
+      ],
+      "title": "Collect usage, pricing, token and cache telemetry",
+      "description": "Normalize provider token accounting and prices, model metadata, tool calls, Jev assessor overhead and end-task cost.",
+      "acceptance": [
+        "Conservation tests reconcile billed usage; unknown usage is not silently assumed zero."
+      ]
+    },
+    {
+      "id": "F-T21",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P2",
+      "priority": "medium",
+      "parent": "F-F07",
+      "depends_on": [
+        "F-T19",
+        "F-T20",
+        "F-T17"
+      ],
+      "title": "Implement guarded adaptive optimization experiments",
+      "description": "Enable A/B or shadow mode, automated rollback when quality degrades, confidence thresholds and human review policy.",
+      "acceptance": [
+        "No policy is promoted by token savings alone; reproducible evaluation gate documents acceptance."
+      ]
+    },
+    {
+      "id": "F-F08",
+      "repo": "fabric",
+      "kind": "feature",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "F-EPIC",
+      "depends_on": [],
+      "title": "Secure operations, reliability and supply-chain governance",
+      "description": "Productionize local-first evidence services and gateway interfaces while minimizing credential, dependency, tenancy and deployment risks.",
+      "acceptance": [
+        "No model or tool gets unrestricted cross-tenant secrets or untrusted cache content.",
+        "Staged rollout, signed/pinned artifacts and incident recovery are documented and tested."
+      ]
+    },
+    {
+      "id": "F-T22",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "F-F08",
+      "depends_on": [],
+      "title": "Implement release quarantine and expedited security patch policy",
+      "description": "Support flexible 1/3/7/14/30/90-day holdback by component risk; default 14 days routine and 30 days high-risk, security fixes expedited after review.",
+      "acceptance": [
+        "Lockfiles/image digests, SBOM, advisory checks and provenance gates tested; no age-only trust assertion."
+      ]
+    },
+    {
+      "id": "F-T23",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "F-F08",
+      "depends_on": [
+        "F-T02",
+        "F-T07"
+      ],
+      "title": "Document and exercise multi-instance deployment and data retention",
+      "description": "Design local and clustered Redis/Valkey/SQLite-compatible storage, backup restore, key rotation, privacy deletion and service boundaries.",
+      "acceptance": [
+        "HA/concurrency/load tests report tested configurations; no production multi-tenant claims without isolation proofs."
+      ]
+    },
+    {
+      "id": "F-T24",
+      "repo": "fabric",
+      "kind": "task",
+      "phase": "P0",
+      "priority": "critical",
+      "parent": "F-F08",
+      "depends_on": [
+        "F-T02",
+        "F-T22"
+      ],
+      "title": "Harden access, secrets, audit and budget enforcement",
+      "description": "Integrate secret manager abstractions, key scoping, least privilege, encryption in transit, outbound allowlists, request auditing and spending alarms.",
+      "acceptance": [
+        "Threat model blocks secret exfiltration via prompts, logs and cross-agent caches; deny cases independently tested."
+      ]
+    }
+  ]
+}
